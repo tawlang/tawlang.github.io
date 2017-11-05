@@ -5,9 +5,9 @@
   <subtitle>小墨鱼</subtitle>
   <link href="/taolang/atom.xml" rel="self"/>
   
-  <link href="http://127.0.0.1:4000/"/>
+  <link href="https://tawlang.github.io/"/>
   <updated>2017-11-04T06:11:02.808Z</updated>
-  <id>http://127.0.0.1:4000/</id>
+  <id>https://tawlang.github.io/</id>
   
   <author>
     <name>taolang</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>tl</title>
-    <link href="http://127.0.0.1:4000/2017/11/04/tl/"/>
-    <id>http://127.0.0.1:4000/2017/11/04/tl/</id>
+    <link href="https://tawlang.github.io/2017/11/04/tl/"/>
+    <id>https://tawlang.github.io/2017/11/04/tl/</id>
     <published>2017-11-04T06:11:02.000Z</published>
     <updated>2017-11-04T06:11:02.808Z</updated>
     
@@ -32,8 +32,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://127.0.0.1:4000/2017/11/04/hello-world/"/>
-    <id>http://127.0.0.1:4000/2017/11/04/hello-world/</id>
+    <link href="https://tawlang.github.io/2017/11/04/hello-world/"/>
+    <id>https://tawlang.github.io/2017/11/04/hello-world/</id>
     <published>2017-11-04T05:19:42.588Z</published>
     <updated>2017-11-04T05:19:42.589Z</updated>
     
@@ -53,8 +53,8 @@
   
   <entry>
     <title>hello word</title>
-    <link href="http://127.0.0.1:4000/2017/11/03/hello-word/"/>
-    <id>http://127.0.0.1:4000/2017/11/03/hello-word/</id>
+    <link href="https://tawlang.github.io/2017/11/03/hello-word/"/>
+    <id>https://tawlang.github.io/2017/11/03/hello-word/</id>
     <published>2017-11-03T08:22:49.000Z</published>
     <updated>2017-11-04T05:19:42.587Z</updated>
     
