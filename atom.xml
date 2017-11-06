@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://tawlang.github.io/"/>
-  <updated>2017-11-04T06:11:02.808Z</updated>
+  <updated>2017-11-05T12:14:13.172Z</updated>
   <id>https://tawlang.github.io/</id>
   
   <author>
@@ -17,13 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>tl</title>
+    <title>myblog</title>
+    <link href="https://tawlang.github.io/2017/11/05/myblog/"/>
+    <id>https://tawlang.github.io/2017/11/05/myblog/</id>
+    <published>2017-11-05T11:46:34.000Z</published>
+    <updated>2017-11-05T12:14:13.172Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2017/11/05/myblog/tx.jpg" alt="ss"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/2017/11/05/myblog/tx.jpg&quot; alt=&quot;ss&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>My Family</title>
     <link href="https://tawlang.github.io/2017/11/04/tl/"/>
     <id>https://tawlang.github.io/2017/11/04/tl/</id>
     <published>2017-11-04T06:11:02.000Z</published>
-    <updated>2017-11-04T06:11:02.808Z</updated>
+    <updated>2017-11-05T11:37:40.729Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="第一次搭建好了自己的小窝"><a href="#第一次搭建好了自己的小窝" class="headerlink" title="第一次搭建好了自己的小窝"></a>第一次搭建好了自己的小窝</h2><h2 id="曾经听人说，"><a href="#曾经听人说，" class="headerlink" title="曾经听人说，"></a>曾经听人说，</h2><p><img src="/2017/11/04/tl/img/tx.jpg" alt=""></p>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;第一次搭建好了自己的小窝&quot;&gt;&lt;a href=&quot;#第一次搭建好了自己的小窝&quot; class=&quot;headerlink&quot; title=&quot;第一次搭建好了自己的小窝&quot;&gt;&lt;/a&gt;第一次搭建好了自己的小窝&lt;/h2&gt;&lt;h2 id=&quot;曾经听人说，&quot;&gt;&lt;a href=&quot;#曾经听人说，&quot;
+      
     
     </summary>
     
@@ -56,7 +85,7 @@
     <link href="https://tawlang.github.io/2017/11/03/hello-word/"/>
     <id>https://tawlang.github.io/2017/11/03/hello-word/</id>
     <published>2017-11-03T08:22:49.000Z</published>
-    <updated>2017-11-04T05:19:42.587Z</updated>
+    <updated>2017-11-05T10:15:50.205Z</updated>
     
     <summary type="html">
     
