@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="小墨鱼的家">
-    <title>小墨鱼的家</title>
+    <title>Abuse-check 的分析 - 小墨鱼的家</title>
     <meta name="author" content="taolang">
     
         <meta name="keywords" content="hexo,小墨鱼,">
@@ -15,17 +15,18 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="永无止境！！">
+    <meta name="description" content="abuse-check 的原理一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。 为什么要使用 abuse-check 防止恶意的访问攻击，给数据库代来压力。 防止机器注册。 防止暴力破解网站。 防止恶意爬虫  abuse-check 具体分析和使用 先添加一个abuse-check的 jar 包。  12345&amp;lt;dependency&amp;gt;">
 <meta name="keywords" content="hexo,小墨鱼">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="小墨鱼的家">
-<meta property="og:url" content="https://tawlang.github.io/index.html">
+<meta property="og:title" content="Abuse-check 的分析">
+<meta property="og:url" content="https://tawlang.github.io/2017/11/07/Abuse-check 的分析/index.html">
 <meta property="og:site_name" content="小墨鱼的家">
-<meta property="og:description" content="永无止境！！">
+<meta property="og:description" content="abuse-check 的原理一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。 为什么要使用 abuse-check 防止恶意的访问攻击，给数据库代来压力。 防止机器注册。 防止暴力破解网站。 防止恶意爬虫  abuse-check 具体分析和使用 先添加一个abuse-check的 jar 包。  12345&amp;lt;dependency&amp;gt;">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-11-07T02:52:17.740Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小墨鱼的家">
-<meta name="twitter:description" content="永无止境！！">
+<meta name="twitter:title" content="Abuse-check 的分析">
+<meta name="twitter:description" content="abuse-check 的原理一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。 为什么要使用 abuse-check 防止恶意的访问攻击，给数据库代来压力。 防止机器注册。 防止暴力破解网站。 防止恶意爬虫  abuse-check 具体分析和使用 先添加一个abuse-check的 jar 包。  12345&amp;lt;dependency&amp;gt;">
     
     
         
@@ -54,7 +55,7 @@
         
     
 
-<header id="header" data-behavior="1">
+<header id="header" data-behavior="4">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">小墨鱼的家</a>
@@ -78,7 +79,7 @@
         
     
 
-<nav id="sidebar" data-behavior="1">
+<nav id="sidebar" data-behavior="4">
     <div class="sidebar-container">
         
             <div class="sidebar-profile">
@@ -193,25 +194,22 @@
 </nav>
 
             
-            <div id="main" data-behavior="1"
+            <div id="main" data-behavior="4"
                  class="
                         hasCoverMetaIn
                         ">
-                <section class="postShorten-group main-content-wrap">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2017/11/07/Abuse-check 的分析/">
-                            Abuse-check 的分析
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Abuse-check 的分析
+        </h1>
+    
+    
+        <div class="post-meta">
     <time itemprop="datePublished" datetime="2017-11-07T19:46:34+08:00">
 	
 		    Nov 07, 2017
@@ -220,10 +218,12 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <h2 id="abuse-check-的原理"><a href="#abuse-check-的原理" class="headerlink" title="abuse-check 的原理"></a>abuse-check 的原理</h2><pre><code>一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="abuse-check-的原理"><a href="#abuse-check-的原理" class="headerlink" title="abuse-check 的原理"></a>abuse-check 的原理</h2><pre><code>一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。
 </code></pre><h2 id="为什么要使用-abuse-check"><a href="#为什么要使用-abuse-check" class="headerlink" title="为什么要使用 abuse-check"></a>为什么要使用 abuse-check</h2><ul>
 <li>防止恶意的访问攻击，给数据库代来压力。</li>
 <li>防止机器注册。</li>
@@ -312,115 +312,91 @@ c6(yes)->i2
 i2->e
 i3->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
 
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2017/11/07/Abuse-check 的分析/#post-footer" class="postShorten-excerpt_link link">
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
         </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2017/11/05/myblog/">
-                            myblog
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2017-11-05T19:46:34+08:00">
-	
-		    Nov 05, 2017
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><img src="/2017/11/05/myblog/tx.jpg" alt="ss"></p>
-
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2017/11/05/myblog/#post-footer" class="postShorten-excerpt_link link">
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2017/11/04/tl/">
-                            My Family
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2017-11-04T14:11:02+08:00">
-	
-		    Nov 04, 2017
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <h2 id="第一次搭建好了自己的小窝"><a href="#第一次搭建好了自己的小窝" class="headerlink" title="第一次搭建好了自己的小窝"></a>第一次搭建好了自己的小窝</h2><h2 id="曾经听人说，"><a href="#曾经听人说，" class="headerlink" title="曾经听人说，"></a>曾经听人说，</h2><p><img src="/2017/11/04/tl/img/tx.jpg" alt=""></p>
-
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2017/11/04/tl/#post-footer" class="postShorten-excerpt_link link">
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
         
-        <li class="pagination-number">page 1 of 1</li>
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/05/myblog/" data-tooltip="myblog">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-facebook-official"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-weibo"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+        
+            
+        
+    </div>
+</article>
+
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -430,6 +406,120 @@ i3->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/05/myblog/" data-tooltip="myblog">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-facebook-official"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-weibo"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-google-plus"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://tawlang.github.io/2017/11/07/Abuse-check 的分析/">
+                    <i class="fa fa-weibo"></i><span>Share on Weibo</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
             
         </div>
         
@@ -564,6 +654,8 @@ i3->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale
         <!--SCRIPTS-->
 <script src="/assets/js/script-ivwiy10zeb8fifc4swnhkwneuk64y53w2scmdmtp8thi9cqfxh31aowtroaz.min.js"></script>
 <!--SCRIPTS END-->
+
+    
 
 
     </body>
