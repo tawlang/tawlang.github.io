@@ -9,24 +9,21 @@
     <title>Abuse-check 的分析 - 小墨鱼的家</title>
     <meta name="author" content="taolang">
     
-        <meta name="keywords" content="hexo,小墨鱼,">
+        <meta name="keywords" content="hexo,小墨鱼,abuse-check">
     
     
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="abuse-check 的原理一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。 为什么要使用 abuse-check 防止恶意的访问攻击，给数据库代来压力。 防止机器注册。 防止暴力破解网站。 防止恶意爬虫  abuse-check 具体分析和使用 先添加一个abuse-check的 jar 包。  12345&amp;lt;dependency&amp;gt;">
-<meta name="keywords" content="hexo,小墨鱼">
+    <meta name="keywords" content="abuse-check">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Abuse-check 的分析">
 <meta property="og:url" content="https://tawlang.github.io/2017/11/07/Abuse-check 的分析/index.html">
 <meta property="og:site_name" content="小墨鱼的家">
-<meta property="og:description" content="abuse-check 的原理一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。 为什么要使用 abuse-check 防止恶意的访问攻击，给数据库代来压力。 防止机器注册。 防止暴力破解网站。 防止恶意爬虫  abuse-check 具体分析和使用 先添加一个abuse-check的 jar 包。  12345&amp;lt;dependency&amp;gt;">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-07T02:52:17.740Z">
+<meta property="og:updated_time" content="2017-11-07T03:16:03.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Abuse-check 的分析">
-<meta name="twitter:description" content="abuse-check 的原理一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。 为什么要使用 abuse-check 防止恶意的访问攻击，给数据库代来压力。 防止机器注册。 防止暴力破解网站。 防止恶意爬虫  abuse-check 具体分析和使用 先添加一个abuse-check的 jar 包。  12345&amp;lt;dependency&amp;gt;">
     
     
         
@@ -223,12 +220,14 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <h2 id="abuse-check-的原理"><a href="#abuse-check-的原理" class="headerlink" title="abuse-check 的原理"></a>abuse-check 的原理</h2><pre><code>一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。
+            <!-- excerpt -->
+<h2 id="abuse-check-的原理"><a href="#abuse-check-的原理" class="headerlink" title="abuse-check 的原理"></a>abuse-check 的原理</h2><pre><code>一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。
 </code></pre><h2 id="为什么要使用-abuse-check"><a href="#为什么要使用-abuse-check" class="headerlink" title="为什么要使用 abuse-check"></a>为什么要使用 abuse-check</h2><ul>
 <li>防止恶意的访问攻击，给数据库代来压力。</li>
 <li>防止机器注册。</li>
 <li>防止暴力破解网站。</li>
-<li>防止恶意爬虫</li>
+<li>防止恶意爬虫<a id="more"></a>
+</li>
 </ul>
 <h2 id="abuse-check-具体分析和使用"><a href="#abuse-check-具体分析和使用" class="headerlink" title="abuse-check 具体分析和使用"></a>abuse-check 具体分析和使用</h2><ol>
 <li><p>先添加一个abuse-check的 jar 包。</p>
@@ -311,7 +310,6 @@ c7(no)->i3
 c6(yes)->i2
 i2->e
 i3->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
-
             
         </div>
     </div>
@@ -630,7 +628,7 @@ i3->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale
                                 
                             </span>
                         </span>
-                        <div class="media-content hide-xs font-merryweather"></div>
+                        <div class="media-content hide-xs font-merryweather"><!--toc--></div>
                     </div>
                     <div style="clear:both;"></div>
                     <hr>
