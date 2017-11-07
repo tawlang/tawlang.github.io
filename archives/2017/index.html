@@ -87,7 +87,7 @@
                 </a>
                 <h4 class="sidebar-profile-name">taolang</h4>
                 
-                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+                    <h5 class="sidebar-profile-bio"><p>永无止境</p>
 </h5>
                 
             </div>
@@ -199,6 +199,135 @@
                         ">
                 
     <section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2017/11/05/Abuse-check 的分析/">
+                            myblog
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2017-11-05T19:46:34+08:00">
+	
+		    Nov 05, 2017
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content" itemprop="articleBody">
+                    <h2 id="abuse-check-的原理"><a href="#abuse-check-的原理" class="headerlink" title="abuse-check 的原理"></a>abuse-check 的原理</h2><pre><code>一个IP在一定时间内新建多少个session,一个session访问多少次。根据相关的规则做出判断。
+</code></pre><h2 id="为什么要使用-abuse-check"><a href="#为什么要使用-abuse-check" class="headerlink" title="为什么要使用 abuse-check"></a>为什么要使用 abuse-check</h2><ul>
+<li>防止恶意的访问攻击，给数据库代来压力。</li>
+<li>防止机器注册。</li>
+<li>防止暴力破解网站。</li>
+<li>防止恶意爬虫</li>
+</ul>
+<h2 id="abuse-check-具体分析和使用"><a href="#abuse-check-具体分析和使用" class="headerlink" title="abuse-check 具体分析和使用"></a>abuse-check 具体分析和使用</h2><ol>
+<li><p>先添加一个abuse-check的 jar 包。</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.focustech.ttnet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ttnet-abusechecker<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>创建 过滤器 AbuseCheckFilter</p>
+</li>
+<li><p>过滤相关访问的url (例如：image, scrpit, style, .json 等)</p>
+</li>
+<li><p>调用 <code>isSafe()</code> 方法</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+
+</li>
+</ol>
+<ol>
+<li><p>isAllowedSpider  方法<br> 主要作用是对爬虫蜘蛛做处理，将其放入（SKIP_SPIDER_IP maptable）)</p>
+</li>
+<li><p>checkIP 方法<br>IP的检测</p>
+<pre><code>*  当BLOCK_TABLE  存在该IP , 24小时过后解除 IP_TABLE , BLOCK_TABLE `true`
+*  IP创建sessin 小于 300 &amp;&amp;  2小时之外 IP_TABLE remove  `true`
+*  3分钟内创建30个session 加入 BLOCK_TABLE   屏蔽 `false`
+*  半个小时内创建150 个session 加入 BLOCK_TABLE   屏蔽  `false`
+*  2个小时内创建300个session 加入 BLOCK_TABLE   屏蔽 `false`
+</code></pre></li>
+</ol>
+<ol>
+<li><p>checkSession 方法<br> Session 的检测 session里面记录的数据，随着session是死亡而删除。    </p>
+<pre><code>*  request中的head中的refer的检查，如果没有refer为空或者null，那么就是有恶意攻击的潜在安全。记录加1，当大于NoReferMaxValue定义的数据时候，就要屏蔽。
+*  判断 SESSION_BLOCK_TABLE 中有该session Id 屏蔽
+*  3分钟内当前session 请求次数90 将该session Id 加入SESSION_BLOCK_TABLE 并 屏蔽
+*  10分钟内当前session 请求次数120 将该session Id 加入SESSION_BLOCK_TABLE 并 屏蔽
+*  1小时内当前session 请求次数360 将该session Id 加入SESSION_BLOCK_TABLE 并 屏蔽
+*  当前session 请求次数3000 将该session Id 加入SESSION_BLOCK_TABLE 并 屏蔽
+</code></pre><p> Session 约束</p>
+<pre><code>* 同一session两次访问服务器的请求小于3s，被认为是严重滥用
+* 初次触发严重滥用，当前session的访问增加严重滥用的增量+1
+* 连续触发严重滥用，当前session的访问增加原来的倍数
+* 再次检查，当前session的访问服务器次数，如果超过，则锁定它 
+* 同一session两次访问服务器的请求小于5s，被认为是普通滥用
+* 初次触发普通滥用，当前session的访问增加严重滥用的增量+1
+* 连续触发普通滥用，当前session的访问增加原来的倍数
+* 再次检查，当前session的访问服务器次数，如果超过，则锁定它
+* 5秒以外的话，解除屏蔽，重新 resetSession()
+</code></pre></li>
+</ol>
+<ol>
+<li>配置的abuse_checker.xml</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">mappings</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">skip_check_ip</span>&gt;</span></div><div class="line">	// 开放IP</div><div class="line">	<span class="tag">&lt;/<span class="name">skip_check_ip</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">denied_ip</span>&gt;</span></div><div class="line">		// 屏蔽的IP</div><div class="line">	    <span class="tag">&lt;<span class="name">ip</span>&gt;</span>121.32.56.158<span class="tag">&lt;/<span class="name">ip</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">denied_ip</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">denied_user_agent</span>&gt;</span></div><div class="line">		</div><div class="line">	<span class="tag">&lt;/<span class="name">denied_user_agent</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!--  检查类型（0：不检查；1：检查域名是否包含该字串；2：检查IP是否在该列表中；3：检查IP是否包含该网段） --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">spider_list</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">spider</span> <span class="attr">name</span>=<span class="string">"BaiDuSpider"</span> <span class="attr">type</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">""</span> /&gt;</span></div><div class="line">		.......</div><div class="line">		<span class="tag">&lt;<span class="name">spider</span> <span class="attr">name</span>=<span class="string">"Exabot"</span> <span class="attr">type</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">""</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">spider_list</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!--  3 分钟内 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">ONE_IP_ALLOWED_NEW_SESSION_COUNT</span>&gt;</span>27<span class="tag">&lt;/<span class="name">ONE_IP_ALLOWED_NEW_SESSION_COUNT</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">NoReferMaxValue</span>&gt;</span>30<span class="tag">&lt;/<span class="name">NoReferMaxValue</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mappings</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: isSafe()
+e=>end: End
+io=>inputoutput: IP
+c1=>condition: SKIP_CHECK_IP（开放IP）
+Yes Or No ?
+c2=>condition: DENIED_IP（屏蔽IP） 
+Yes Or No ?
+c3=>condition: isAllowedSpider 
+Yes Or No ?
+c4=>condition: session.isNew()
+Yes Or No ?
+c5=>condition: IP is in IP_TABLE（IP map）
+Yes Or No ?
+c6=>condition: session check
+c7=>condition: checkIp()
+i2=>inputoutput: true
+i3=>inputoutput: false
+i4=>inputoutput: 放入IP到IP_TABLE
+i5=>inputoutput: 清除IP在IP_TABLE
+
+st->io->c1->e
+c1(no)->c2(no)->c3(no)->c4
+c4(yes)->c5(no,left)->i4->i5->i2->e
+c1(yes, right)->i2
+c2(yes,right)->i3
+c3(yes,right)->i2
+c4(no)->c6(no)->i3
+c5(yes)->c7(yes)->i2
+c7(no)->i3
+c6(yes)->i2
+i2->e
+i3->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+
+                    
+                        
+                    
+                    
+                        <p>
+                            <a href="/2017/11/05/Abuse-check 的分析/#post-footer" class="postShorten-excerpt_link link">
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
     
     
     <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
@@ -322,7 +451,7 @@
         
             <h4 id="about-card-name">taolang</h4>
         
-            <div id="about-card-bio"><p>author.bio</p>
+            <div id="about-card-bio"><p>永无止境</p>
 </div>
         
         
@@ -384,6 +513,25 @@
                 <div class="media">
                     
                     <div class="media-body">
+                        <a class="link-unstyled" href="https://tawlang.github.io/2017/11/05/Abuse-check 的分析/">
+                            <h3 class="media-heading">myblog</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    Nov 5, 2017
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
                         <a class="link-unstyled" href="https://tawlang.github.io/2017/11/05/myblog/">
                             <h3 class="media-heading">myblog</h3>
                         </a>
@@ -407,7 +555,7 @@
                 data-message-zero="no post found"
                 data-message-one="1 post found"
                 data-message-other="{n} posts found">
-                2 posts found
+                3 posts found
             </p>
         </div>
     </div>
